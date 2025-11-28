@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base : process.env.VITE_BASE_URL || '/Burger',
+  // base : '/Burger', // Vercel වලට මේ line එක අවශ්‍ය නැහැ. ඒක comment කරන්න හෝ මකන්න.
 })

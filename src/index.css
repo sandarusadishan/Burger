@@ -1,0 +1,186 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Dark theme - primary colors */
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
+    
+    /* Gold accent */
+    --primary: 45 95% 48%;
+    --primary-foreground: 0 0% 0%;
+    
+    /* Secondary and muted */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+    
+    --accent: 45 95% 48%;
+    --accent-foreground: 0 0% 0%;
+    
+    /* Card and popover */
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    
+    /* Borders and inputs */
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 45 95% 48%;
+    
+    /* Destructive */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* Radius */
+    --radius: 0.75rem;
+    
+    /* Custom gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(45 95% 48%), hsl(45 95% 60%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 5%), hsl(0 0% 8%));
+    
+    /* Shadows */
+    --shadow-gold: 0 4px 20px -2px hsl(45 95% 48% / 0.3);
+    --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.5);
+    
+    /* Sidebar colors */
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 45 95% 48%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 45 95% 48%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    transition-property: color, background-color, border-color, fill, stroke;
+    transition-duration: 200ms;
+  }
+  
+  body {
+    @apply font-sans bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Add smooth transitions to interactive elements */
+  button, a, input {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  /* Keyframe animations for smooth entrances */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeInBlur {
+    from { opacity: 0; filter: blur(5px); }
+    to { opacity: 1; filter: blur(0); }
+  }
+
+  @keyframes border-glow {
+    from { box-shadow: 0 0 15px -5px hsl(var(--primary) / 0.3); }
+    to { box-shadow: 0 0 25px 0px hsl(var(--primary) / 0.6); }
+  }
+
+  /* ✅ Electric border animation සඳහා keyframe එක */
+  @keyframes spin-around {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  html {
+    /* Add smooth scrolling behavior */
+    scroll-behavior: smooth;
+    /* Start with a smaller base font size on mobile */
+    font-size: 14px;
+  }
+
+  @screen sm {
+    /* Scale up font size for tablets and desktops */
+    html {
+      font-size: 16px;
+    }
+  }
+
+  /* Responsive Typography */
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply border bg-card/50 backdrop-blur-lg border-border/50;
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+  
+  .animate-fadeInBlur {
+    animation: fadeInBlur 0.6s ease-out forwards;
+  }
+
+  .gold-glow {
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .elegant-shadow {
+    box-shadow: var(--shadow-elegant);
+  }
+
+  .border-glow {
+    animation: border-glow 1.5s ease-in-out infinite alternate;
+  }
+
+  .category-card:hover .category-card-image {
+    @apply scale-110;
+  }
+
+  /* ✅ Electric border effect එක සඳහා custom class එක */
+  .electric-border::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, transparent, transparent, hsl(var(--primary)));
+    animation: spin-around 4s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  .electric-border:hover::before {
+    opacity: 1;
+  }
+}
